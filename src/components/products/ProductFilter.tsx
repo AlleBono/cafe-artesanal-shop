@@ -46,9 +46,9 @@ const ProductFilter = ({ onFilter, weights, origins, roasts, maxPrice }: Product
   };
 
   const handleClearFilters = () => {
-    const resetFilters = {
+    const resetFilters: Filters = {
       search: '',
-      price: [0, maxPrice],
+      price: [0, maxPrice] as [number, number],
       weights: [],
       origins: [],
       roasts: [],
