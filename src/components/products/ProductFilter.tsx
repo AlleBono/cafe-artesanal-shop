@@ -1,91 +1,11 @@
 
-import { Link } from 'react-router-dom';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ShoppingCart, Filter, X, Search } from 'lucide-react';
-import { useCart } from '@/context/CartContext';
-import { Product } from '@/types';
-import { toast } from '@/hooks/use-toast';
-import { useState } from 'react';
-
-// Product Card Component
-interface ProductCardProps {
-  product: Product;
-}
-
-export const ProductCard = ({ product }: ProductCardProps) => {
-  const { addToCart } = useCart();
-  
-  const handleAddToCart = () => {
-    addToCart({...product, quantity: 1});
-    toast({
-      title: "Añadido al carrito",
-      description: `${product.name} ha sido añadido a tu carrito.`,
-      duration: 3000,
-    });
-  };
-  
-  return (
-    <Card className="product-card-hover overflow-hidden border border-gray-200">
-      <Link to={`/products/${product.id}`}>
-        <div className="aspect-square overflow-hidden">
-          <img 
-            src={product.image} 
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform hover:scale-105"
-          />
-        </div>
-      </Link>
-      <CardContent className="p-6">
-        <div className="flex justify-between items-start mb-2">
-          <Link to={`/products/${product.id}`} className="block">
-            <h3 className="font-serif text-lg font-bold hover:text-coffee-medium transition-colors">{product.name}</h3>
-          </Link>
-          <span className="font-bold text-coffee-medium">${product.price.toFixed(2)}</span>
-        </div>
-        <p className="text-muted-foreground text-sm mb-2">{product.weight}</p>
-        <p className="text-sm line-clamp-2">{product.description}</p>
-      </CardContent>
-      <CardFooter className="p-6 pt-0">
-        <Button 
-          onClick={handleAddToCart}
-          className="w-full bg-coffee-dark hover:bg-coffee-medium"
-        >
-          <ShoppingCart className="mr-2 h-4 w-4" />
-          Añadir al Carrito
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-};
-
-// Product Grid Component
-interface ProductGridProps {
-  products: Product[];
-}
-
-export const ProductGrid = ({ products }: ProductGridProps) => {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
-  );
-};
-
-// Product Filter Component
-export interface Filters {
-  search: string;
-  price: [number, number];
-  weights: string[];
-  origins: string[];
-  roasts: string[];
-}
+import { Filter, X } from 'lucide-react';
 
 interface ProductFilterProps {
   onFilter: (filters: Filters) => void;
@@ -95,7 +15,15 @@ interface ProductFilterProps {
   maxPrice: number;
 }
 
-export const ProductFilter = ({ onFilter, weights, origins, roasts, maxPrice }: ProductFilterProps) => {
+export interface Filters {
+  search: string;
+  price: [number, number];
+  weights: string[];
+  origins: string[];
+  roasts: string[];
+}
+
+const ProductFilter = ({ onFilter, weights, origins, roasts, maxPrice }: ProductFilterProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [filters, setFilters] = useState<Filters>({
     search: '',
@@ -120,7 +48,7 @@ export const ProductFilter = ({ onFilter, weights, origins, roasts, maxPrice }: 
   const handleClearFilters = () => {
     const resetFilters = {
       search: '',
-      price: [0, maxPrice] as [number, number],
+      price: [0, maxPrice],
       weights: [],
       origins: [],
       roasts: [],
@@ -255,3 +183,5 @@ export const ProductFilter = ({ onFilter, weights, origins, roasts, maxPrice }: 
     </div>
   );
 };
+
+export default ProductFilter;
