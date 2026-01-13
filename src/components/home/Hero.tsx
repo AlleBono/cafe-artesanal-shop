@@ -1,10 +1,16 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import heroBg from '@/assets/hero-coffee-bg.jpg';
 
 const Hero = () => {
   return (
-    <section className="hero-section text-white py-32 md:py-48">
+    <section 
+      className="text-white py-32 md:py-48 bg-cover bg-center"
+      style={{ 
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url(${heroBg})` 
+      }}
+    >
       <div className="container mx-auto px-4 max-w-5xl">
         <div className="max-w-2xl mx-auto md:mx-0">
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">

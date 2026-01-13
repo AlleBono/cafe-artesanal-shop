@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import aboutImage from '@/assets/about-coffee.jpg';
 
 const About = () => {
   return (
@@ -21,7 +22,7 @@ const About = () => {
           </div>
           <div className="order-1 md:order-2 rounded-lg overflow-hidden shadow-xl">
             <img 
-              src="https://images.unsplash.com/photo-1493962853295-0fd70327578a" 
+              src={aboutImage} 
               alt="Café artesanal de alta calidad" 
               className="w-full h-[400px] object-cover"
             />
